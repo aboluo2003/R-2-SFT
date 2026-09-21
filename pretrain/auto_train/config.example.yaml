@@ -1,0 +1,31 @@
+# Default values used when an experiment omits the corresponding field.
+default_max_step: 220
+# Base name for eval result dirs / logs. The eval script appends "_think"
+# or "_nothink" to this base, producing e.g. results_rec_demo_think/.
+# If omitted, the experiment's label is used as the eval base name.
+default_eval_name: qwq
+# Whether to run the think / nothink eval by default. Each experiment can
+# override these individually.
+default_eval_think: false
+default_eval_nothink: true
+# Whether to evaluate EVERY converted checkpoint (true) or only the final one
+# (false). When true, the step number is appended to eval_name so the per-step
+# result dirs don't collide, e.g. results_rec_demo_step240_think/.
+# Can be overridden per-experiment and via the CLI flags
+#   --eval-all-checkpoints / --no-eval-all-checkpoints
+default_eval_all_checkpoints: false
+# Benchmark data version; eval results are written to
+#   benchmarks/results/<data_version>/results_<eval_name>[_step<N>]_<think|nothink>/
+data_version: v1.0
+
+experiments:
+  - label: rec_data_version
+    run_script: examples/ablation/posttrain_sft_rec_ver1.sh
+    max_step: 1220
+    eval_name: sft_rec_ver1
+    eval_think: false
+    eval_nothink: true
+    eval_all_checkpoints: true
+    # Override the top-level default for this experiment:
+    # eval_all_checkpoints: true
+  
